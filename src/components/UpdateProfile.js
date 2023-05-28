@@ -18,6 +18,7 @@ export default function UpdateProfile() {
       setLoading(true);
       setError('');
       navigate('/');
+      navigate(0);
     } catch {
       setError('Failed to update profile');
     }
