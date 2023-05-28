@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const { register } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,8 +14,14 @@ const Register = () => {
   
   const handleSubmit = async(e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      return setError('Passwords do not match!');
+    }
+    if (password.length < 6) {
+      return setError('Password must be at least 6 characters long!');
+    }
     try {
-      register(email, password);
+      await register(email, password);
       setLoading(true);
       setError('');
       navigate('/');
@@ -46,6 +53,15 @@ const Register = () => {
           placeholder="********"
           id="password"
           name="password"
+        />
+        <label for="confirm-password">Confirm Password</label>
+        <input
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          type="password"
+          placeholder="********"
+          id="confirmPassword"
+          name="confirmPassword"
         />
         <button disabled={loading} type="submit">Register</button>
       </form>

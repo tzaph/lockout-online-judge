@@ -4,19 +4,20 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(79deg, #ac66ed, #fcedfc 48%, #ebaaff);
+  background-image: linear-gradient(90deg, #66D3FA , #D5F3FE 50%, #B2FFFF );
 }
 
-.auth-form-container, .login-form, .register-form {
+.auth-form-container, .login-form, .register-form, .profile-container, .dashboard-container {
   display: flex;
   flex-direction: column;
 }
 
-.auth-form-container {
+.auth-form-container, .profile-container {
   padding: 5rem;
-  border: 1px solid white;
+  border: 5px solid #2565AE;
   border-radius: 20px;
   margin: 0.5rem;
+  background-color: #D5F3FE;
 }
 
 label {
@@ -42,11 +43,4 @@ button {
 .link-button {
   background: none;
   color: grey;
-}
-
-.profile-container {
-  padding: 5rem;
-  border: 1px solid white;
-  border-radius: 20px;
-  margin: 0.5rem;
 }

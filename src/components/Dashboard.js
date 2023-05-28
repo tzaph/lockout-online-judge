@@ -19,15 +19,16 @@ export default function Dashboard() {
   }
 
   return (
-    <>
-      <div>Dashboard</div>
+    <div className="dashboard-container">
+      <h1>Dashboard</h1>
       <div className="profile-container">
         <h2>Profile</h2>
-        Email: {currentUser.email}
-        Name: {currentUser.displayName}
+        <label>Email: {currentUser.email}</label>
+        <label>Name: {currentUser.displayName}</label>
+        <br></br>
         <Link to="/update-profile">Update Profile</Link>
       </div>
       <button className="button" onClick={handleLogout}>Logout</button>
-    </>
+    </div>
   );
 }
