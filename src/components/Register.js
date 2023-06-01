@@ -7,7 +7,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { register } = useAuth();
+  const { register, addUserInformationToDatabase } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const Register = () => {
     }
     try {
       await register(email, password);
+      await addUserInformationToDatabase();
       setLoading(true);
       setError('');
       navigate('/');

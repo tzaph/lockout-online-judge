@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
+import { getDatabase, ref, get, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function UpdateProfile() {
-  const [name, setName] = useState('');
-  const { currentUser, updateName } = useAuth();
+  const [data, setData] = useState({
+    codeforcesHandle:"",
+    email:"",
+    name:"",
+    uid:""
+  })
+  const { currentUser, updateName, updateCodeforcesHandle } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,6 +21,7 @@ export default function UpdateProfile() {
 
     try {
       await updateName(name);
+      await updateCodeforcesHandle(cfHandle);
       setLoading(true);
       setError('');
       navigate('/');
@@ -25,6 +32,21 @@ export default function UpdateProfile() {
     setLoading(false);
   }
 
+  const Getdata = () =>{
+    get(child(ref(getDatabase()), 'users/' + currentUser.uid)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setData(snapshot.val())
+      } else {
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }
+  useEffect(() => { Getdata(); }, [])
+
+  const [name, setName] = useState(data.name);
+  const [cfHandle, setCfhandle] = useState(data.codeforcesHandle);
+
   return (
     <div className="auth-form-container">
       <h2>Update Profile</h2>
@@ -34,9 +56,17 @@ export default function UpdateProfile() {
         <input
           onChange={(e) => setName(e.target.value)}
           type="name"
-          defaultValue={currentUser.displayName}
+          defaultValue={data.name}
           id="name"
           name="name"
+        />
+        <label for="cfHandle">Codeforces Handle</label>
+        <input
+          onChange={(e) => setCfhandle(e.target.value)}
+          type="cfHandle"
+          defaultValue={data.codeforcesHandle}
+          id="cfHandle"
+          name="cfHandle"
         />
         <button disabled={loading} type="submit">Update</button>
       </form>
