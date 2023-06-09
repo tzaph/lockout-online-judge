@@ -20,8 +20,8 @@ export default function UpdateProfile() {
     e.preventDefault();
 
     try {
-      await updateName(name);
-      await updateCodeforcesHandle(cfHandle);
+      await updateName(e.target.name.value);
+      await updateCodeforcesHandle(e.target.cfHandle.value);
       setLoading(true);
       setError('');
       navigate('/');
@@ -32,7 +32,7 @@ export default function UpdateProfile() {
     setLoading(false);
   }
 
-  const Getdata = () =>{
+  const Getdata = () => {
     get(child(ref(getDatabase()), 'users/' + currentUser.uid)).then((snapshot) => {
       if (snapshot.exists()) {
         setData(snapshot.val())
@@ -42,10 +42,7 @@ export default function UpdateProfile() {
       console.error(error);
     });
   }
-  useEffect(() => { Getdata(); }, [])
-
-  const [name, setName] = useState(data.name);
-  const [cfHandle, setCfhandle] = useState(data.codeforcesHandle);
+  useEffect(() => { Getdata(); }, []);
 
   return (
     <div className="auth-form-container">
@@ -54,7 +51,6 @@ export default function UpdateProfile() {
       <form className="register-form" onSubmit={handleSubmit}>
         <label for="name">Name</label>
         <input
-          onChange={(e) => setName(e.target.value)}
           type="name"
           defaultValue={data.name}
           id="name"
@@ -62,7 +58,6 @@ export default function UpdateProfile() {
         />
         <label for="cfHandle">Codeforces Handle</label>
         <input
-          onChange={(e) => setCfhandle(e.target.value)}
           type="cfHandle"
           defaultValue={data.codeforcesHandle}
           id="cfHandle"
