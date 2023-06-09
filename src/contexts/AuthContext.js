@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth'
 import { getDatabase, ref, set, update, get } from "firebase/database"
+import axios from "axios"
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -45,9 +46,17 @@ export function AuthProvider({ children }){
 
   function updateCodeforcesHandle(codeforcesHandle) {
     const db = getDatabase()
-    update(ref(db, 'users/' + auth.currentUser.uid), {
-      codeforcesHandle: codeforcesHandle
-    });
+
+    return axios.get(`https://codeforces.com/api/user.info?handles=${codeforcesHandle}`)
+      .then(res => {
+        console.log("hi");
+        update(ref(db, 'users/' + auth.currentUser.uid), {
+          codeforcesHandleData: JSON.stringify(res.data.result[0]),
+          codeforcesHandle: codeforcesHandle
+        });
+      }).catch (err => {
+        throw err.response.data.comment
+      })    
   }
 
   function getCodeforcesHandle(currentUser) {
