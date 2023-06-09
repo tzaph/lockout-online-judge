@@ -5,12 +5,7 @@ import { getDatabase, ref, get, child } from 'firebase/database';
 
 export default function Dashboard() {
   const [error, setError] = useState('');
-  const [data, setData] = useState({
-    codeforcesHandle:"",
-    email:"",
-    name:"",
-    uid:""
-  })
+  const [data, setData] = useState({})
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
