@@ -42,6 +42,7 @@ export default function Dashboard() {
         <label>Codeforces Handle: {data.codeforcesHandle}</label>
         <br></br>
         <Link to="/update-profile">Update Profile</Link>
+        <Link to="/refresh-problem-database">Refresh Problem Database</Link>
       </div>
       <button className="button" onClick={handleLogout}>Logout</button>
     </div>

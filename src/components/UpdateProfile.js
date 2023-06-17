@@ -5,7 +5,12 @@ import { getDatabase, ref, get, child } from "firebase/database";
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function UpdateProfile() {
-  const [data, setData] = useState()
+  const [data, setData] = useState({
+    codeforcesHandle: "",
+    email: "",
+    name: "",
+    uid: ""
+  })
   const { currentUser, updateName, updateCodeforcesHandle } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
