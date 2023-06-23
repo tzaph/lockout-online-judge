@@ -1,11 +1,14 @@
 import { getDatabase, update, get, child, ref } from "firebase/database";
 import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from '../../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import axios from "axios"
 
 export default function Lobby(props) {
+  const { currentUser } = useAuth();
   const db = getDatabase();
   const propState = useLocation();
+  const startRating = 800;
   const contestLength = 2700000; // 1 minute = 60000, currently set to 45 minutes
   const [timer, setTimer] = useState("00:00:00");
   const p1data = propState.state.p1;
@@ -38,13 +41,23 @@ export default function Lobby(props) {
     setP1handle(p1.name);
     setP2handle(p2.name);
     let hasProblems = false;
+    let isPlayer1 = false;
+    await get(child(ref(db), 'users/' + currentUser.uid)).then((snapshot) => {
+      if (snapshot.exists()) {
+        if (snapshot.val().codeforcesHandle == p1.name)
+          isPlayer1 = true;
+      } else {
+
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
     await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
       if (snapshot.exists()) {
         if (snapshot.val().problemLinks[0].contestId != "") {
           hasProblems = true;
           setProblems(snapshot.val().problemLinks);
           setEndTime(snapshot.val().endTime);
-          startTime = snapshot.val().startTime;
           setP1sub(snapshot.val().player1SubmissionId);
           setP2sub(snapshot.val().player2SubmissionId);
           setP1points(snapshot.val().player1points);
@@ -61,7 +74,7 @@ export default function Lobby(props) {
       console.error(error);
     });
 
-    if (!hasProblems) {
+    if (!hasProblems && isPlayer1) {
       // insert new problems here
       const newProblems = [];
       const problemLinks = [];
@@ -69,7 +82,6 @@ export default function Lobby(props) {
       const emptyarr = [];
       players.push(p1);
       players.push(p2);
-      const startRating = 800;
       for (let ratingValue = startRating; ratingValue < startRating + 500; ratingValue += 100) {
         emptyarr.push(2000000000);
         await get(child(ref(db), 'problems/' + ratingValue)).then((snapshot) => {
@@ -103,6 +115,29 @@ export default function Lobby(props) {
         endTime: startTime + contestLength,
         resultMessage: "",
         ended: false
+      });
+    } else if (!hasProblems) {
+      await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
+        if (snapshot.exists()) {
+          if (snapshot.val().problemLinks[0].contestId != "") {
+            hasProblems = true;
+            setProblems(snapshot.val().problemLinks);
+            setEndTime(snapshot.val().endTime);
+            startTime = snapshot.val().startTime;
+            setP1sub(snapshot.val().player1SubmissionId);
+            setP2sub(snapshot.val().player2SubmissionId);
+            setP1points(snapshot.val().player1points);
+            setP2points(snapshot.val().player2points);
+            setResultMessage(snapshot.val().resultMessage);
+            setEnded(snapshot.val().ended);
+          }
+          else
+            hasProblems = false;
+        } else {
+          hasProblems = false;
+        }
+      }).catch((error) => {
+        console.error(error);
       });
     }
     setLoading(false);
@@ -149,15 +184,26 @@ export default function Lobby(props) {
     }
 
     setLoading(true);
-    await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setProblems(snapshot.val().problemLinks);
-        setP1sub(snapshot.val().player1SubmissionId);
-        setP2sub(snapshot.val().player2SubmissionId);
-      } else {
-        return;
-      }
-    });
+    if (problems[0].contestId == "") {
+      await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
+        if (snapshot.exists()) {
+          if (snapshot.val().problemLinks[0].contestId != "") {
+            setProblems(snapshot.val().problemLinks);
+            setEndTime(snapshot.val().endTime);
+            setP1sub(snapshot.val().player1SubmissionId);
+            setP2sub(snapshot.val().player2SubmissionId);
+            setP1points(snapshot.val().player1points);
+            setP2points(snapshot.val().player2points);
+            setResultMessage(snapshot.val().resultMessage);
+            setEnded(snapshot.val().ended);
+          }
+        }
+      }).catch((error) => {
+        console.error(error);
+      });
+      setLoading(false);
+      return;
+    }
 
     // check submissions
     await listRecentSubmissions(p1handle);
