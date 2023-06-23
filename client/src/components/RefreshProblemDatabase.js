@@ -7,18 +7,13 @@ import axios from "axios"
 export default function RefreshProblemDatabase() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState("Loading...");
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const apiCall = axios.get(
-      `https://codeforces.com/api/problemset.problems?tags=`
-    );
-
     for (let ratingValue = 800; ratingValue <= 3600; ratingValue += 100) {
       setTimeout(() => {
         if (ratingValue <= 3500) {
-          setMessage(ratingValue)
+          setMessage("Loading problems of rating " + ratingValue)
           axios.get(`https://codeforces.com/api/problemset.problems?tags=`)
               .then(res => {
                 let problemsetList = res.data.result.problems
@@ -45,9 +40,7 @@ export default function RefreshProblemDatabase() {
     <div className="auth-form-container">
       <h2>Refreshing Codeforces Problem Database</h2>
       {error && <Alert variant='danger'>{error}</Alert>}
-      <div className="link-button">
-        <Link to="/">{message}</Link>
-      </div>
+      {message == "Done!" ? <div className="link-button"><Link to="/">{message}</Link></div> : <p>{message}</p>}
     </div>
   );
 }
