@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<UpdateProfile /> Renders correctly 1`] = `
+<div
+  className="auth-form-container"
+>
+  <h2>
+    Update Profile
+  </h2>
+  <form
+    className="register-form"
+    onSubmit={[Function]}
+  >
+    <label
+      for="name"
+    >
+      Name
+    </label>
+    <input
+      defaultValue=""
+      id="name"
+      name="name"
+      type="name"
+    />
+    <label
+      for="cfHandle"
+    >
+      Codeforces Handle
+    </label>
+    <input
+      defaultValue=""
+      id="cfHandle"
+      name="cfHandle"
+      type="cfHandle"
+    />
+    <button
+      disabled={false}
+      type="submit"
+    >
+      Update
+    </button>
+  </form>
+  <div
+    className="link-button"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Cancel
+    </a>
+  </div>
+</div>
+`;

@@ -6,7 +6,8 @@ import { getDatabase, ref, get, child } from 'firebase/database';
 export default function Dashboard() {
   const [error, setError] = useState('');
   const [data, setData] = useState({})
-  const { currentUser, logout } = useAuth();
+  const currentUser = useAuth()?.currentUser;
+  const logout = useAuth()?.logout;
   const navigate = useNavigate();
 
   const handleLogout = async() => {

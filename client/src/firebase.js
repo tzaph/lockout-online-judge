@@ -3,7 +3,7 @@ import  {getDatabase} from "firebase/database"
 import { initializeApp } from "firebase/app"
 
 const app = initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY + "",
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
@@ -13,6 +13,6 @@ const app = initializeApp({
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL
 })
 
-export const auth = getAuth(app)
-export const database = getDatabase()
-export default app
+const auth = getAuth()
+
+export {app, auth}

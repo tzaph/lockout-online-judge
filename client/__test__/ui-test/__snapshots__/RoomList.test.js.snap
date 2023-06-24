@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RoomList /> Renders correctly 1`] = `
+<div>
+  <div
+    className="auth-form-container"
+  >
+    <h3>
+      Enter room code to host/join
+    </h3>
+    <p />
+    <p />
+    <input
+      maxLength={10}
+      name="code"
+      onChange={[Function]}
+      required={true}
+      type="text"
+      value=""
+    />
+    <br />
+    <button
+      className="goButton"
+      onClick={[Function]}
+    >
+      Go!
+    </button>
+    <div
+      className="link-button"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Cancel
+      </a>
+    </div>
+  </div>
+</div>
+`;

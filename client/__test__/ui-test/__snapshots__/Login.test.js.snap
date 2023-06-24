@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> Renders correctly 1`] = `
+<div
+  className="auth-form-container"
+>
+  <h2>
+    Login
+  </h2>
+  <form
+    className="register-form"
+    onSubmit={[Function]}
+  >
+    <label
+      for="email"
+    >
+      Email
+    </label>
+    <input
+      id="email"
+      name="email"
+      onChange={[Function]}
+      placeholder="youremail@gmail.com"
+      type="email"
+      value=""
+    />
+    <label
+      for="password"
+    >
+      Password
+    </label>
+    <input
+      id="password"
+      name="password"
+      onChange={[Function]}
+      placeholder="********"
+      type="password"
+      value=""
+    />
+    <button
+      disabled={false}
+      type="submit"
+    >
+      Login
+    </button>
+  </form>
+  <div
+    className="link-button"
+  >
+    Don't have an account? 
+    <a
+      href="/register"
+      onClick={[Function]}
+    >
+      Register
+    </a>
+  </div>
+</div>
+`;
