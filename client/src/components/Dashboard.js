@@ -43,7 +43,6 @@ export default function Dashboard() {
         <br></br>
         <Link to="/update-profile">Update Profile</Link>
         <Link to="/refresh-problem-database">Refresh Problem Database</Link>
-        <Link to="/room-list">Join Room</Link>
       </div>
       <button className="button" onClick={handleLogout}>Logout</button>
     </div>
