@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RefreshProblemDatabase /> Renders correctly 1`] = `
+<div
+  className="auth-form-container"
+>
+  <h2>
+    Refreshing Codeforces Problem Database
+  </h2>
+  <p>
+    Loading...
+  </p>
+</div>
+`;

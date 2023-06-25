@@ -11,7 +11,9 @@ export default function UpdateProfile() {
     name: "",
     uid: ""
   })
-  const { currentUser, updateName, updateCodeforcesHandle } = useAuth();
+  const currentUser = useAuth()?.currentUser;
+  const updateName = useAuth()?.updateName;
+  const updateCodeforcesHandle = useAuth()?.updateCodeforcesHandle;
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

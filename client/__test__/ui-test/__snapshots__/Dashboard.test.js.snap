@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dashboard /> Renders correctly 1`] = `
+<div
+  className="dashboard-container"
+>
+  <h1>
+    Dashboard
+  </h1>
+  <div
+    className="profile-container"
+  >
+    <h2>
+      Profile
+    </h2>
+    <label>
+      Email: 
+    </label>
+    <label>
+      Name: 
+    </label>
+    <label>
+      Codeforces Handle: 
+    </label>
+    <br />
+    <a
+      href="/update-profile"
+      onClick={[Function]}
+    >
+      Update Profile
+    </a>
+    <a
+      href="/refresh-problem-database"
+      onClick={[Function]}
+    >
+      Refresh Problem Database
+    </a>
+  </div>
+  <button
+    className="button"
+    onClick={[Function]}
+  >
+    Logout
+  </button>
+</div>
+`;

@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NavBar /> Renders correctly 1`] = `
+<nav
+  className="nav"
+>
+  <a
+    className="site-title"
+    href="/"
+    onClick={[Function]}
+  >
+    Lockout OJ
+  </a>
+  <ul>
+    <li
+      className=""
+    >
+      <a
+        href="/room-list"
+        onClick={[Function]}
+      >
+        Join Room
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
