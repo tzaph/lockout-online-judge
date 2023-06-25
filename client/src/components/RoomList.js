@@ -9,7 +9,7 @@ const socket = io.connect("http://localhost:3001");
 
 export default function RoomList() {
   const [data, setData] = useState({})
-  const currentUser = useAuth()?.currentUser;
+  const { currentUser } = useAuth();
 
   const Getdata = () =>{
     get(child(ref(getDatabase()), 'users/' + currentUser.uid)).then((snapshot) => {
