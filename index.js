@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://stellar-cactus-9b498b.netlify.app/",
+    origin: "jazzy-speculoos-fa7c28.netlify.app",
     methods: ["GET", "POST"],
   },
 });
