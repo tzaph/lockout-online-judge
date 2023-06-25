@@ -5,9 +5,9 @@ import App from "../src/App";
 jest.mock("../src/firebase", () => ({
   firebase: {
     auth: () => ({
-      onAuthStateChanged: jest.fn()
-    })
-  }
+      onAuthStateChanged: jest.fn(),
+    }),
+  },
 }));
 
 describe("<App />", () => {

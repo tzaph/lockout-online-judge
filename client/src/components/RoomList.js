@@ -1,57 +1,61 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from '../contexts/AuthContext';
-import { Alert } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { getDatabase, update, ref, get, child } from 'firebase/database';
+import { useAuth } from "../contexts/AuthContext";
+import { Alert } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+import { getDatabase, update, ref, get, child } from "firebase/database";
 
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001");
 
 export default function RoomList() {
-  const [data, setData] = useState({})
+  const [data, setData] = useState({});
   const { currentUser } = useAuth();
   const [ready, setReady] = useState(false);
   const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const [error, setError] = useState("");
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  const Getdata = () =>{
-    get(child(ref(getDatabase()), 'users/' + currentUser.uid)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setData(snapshot.val())
-      }
-    }).catch((err) => {
-      console.error(err);
-    });
-  }
-  useEffect(()=>{Getdata();},[])
+  const Getdata = () => {
+    get(child(ref(getDatabase()), "users/" + currentUser.uid))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setData(snapshot.val());
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    Getdata();
+  }, []);
 
   const [room, setRoom] = useState("");
   const [isFull, setFull] = useState(false);
   const [isValid, setValid] = useState(true);
   const [started, setStarted] = useState(false);
 
-  socket.on('roomFull', () => {
+  socket.on("roomFull", () => {
     setRoom("");
     setFull(true);
   });
 
-  socket.on('roomUnavailable', () => {
+  socket.on("roomUnavailable", () => {
     setError("Room code is invalid");
     setRoom("");
     setValid(false);
     setTimeout(() => setValid(true), 5000);
-  })
-  
-  socket.on('joinedRoom', () => {
+  });
+
+  socket.on("joinedRoom", () => {
     setStarted(true);
   });
 
-  function handleRoom (e) {
+  function handleRoom(e) {
     setRoom(e.target.value);
   }
 
-  const handleCreateRoom = async() => {
+  const handleCreateRoom = async () => {
     if (data.codeforcesHandle == "") {
       setError("Please register your Codeforces handle");
       setRoom("");
@@ -60,24 +64,28 @@ export default function RoomList() {
       return;
     }
 
-    let newRoomCode = '';
-    while (newRoomCode == '') {
+    let newRoomCode = "";
+    while (newRoomCode == "") {
       for (let i = 0; i < 6; i++)
-        newRoomCode += characters.charAt(Math.floor(Math.random() * characters.length));
-      await get(child(ref(getDatabase()), 'duelRoom/' + newRoomCode)).then((snapshot) => {
-        if (snapshot.exists()) {
-          newRoomCode = '';
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
+        newRoomCode += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      await get(child(ref(getDatabase()), "duelRoom/" + newRoomCode))
+        .then((snapshot) => {
+          if (snapshot.exists()) {
+            newRoomCode = "";
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     setRoom(newRoomCode);
-    socket.emit('joinRoom', data.codeforcesHandle, newRoomCode, 1);
-  }
+    socket.emit("joinRoom", data.codeforcesHandle, newRoomCode, 1);
+  };
 
-  const handleJoinRoom = async() => {
+  const handleJoinRoom = async () => {
     if (!room) {
       setError("Please enter room code");
       setRoom("");
@@ -94,27 +102,29 @@ export default function RoomList() {
     }
 
     // check if room was created before
-    await get(child(ref(getDatabase()), 'duelRoom/' + room)).then((snapshot) => {
-      if (snapshot.exists()) {
-        setError('');
-        navigate('/lobby', {
-          state: {
-            p1: snapshot.val().players[0],
-            p2: snapshot.val().players[1],
-            roomID: room,
-            startTime: snapshot.val().startTime
-          }
-        });
-      } else {
-        setRoom(room);
-        socket.emit('joinRoom', data.codeforcesHandle, room, 2);
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
+    await get(child(ref(getDatabase()), "duelRoom/" + room))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setError("");
+          navigate("/lobby", {
+            state: {
+              p1: snapshot.val().players[0],
+              p2: snapshot.val().players[1],
+              roomID: room,
+              startTime: snapshot.val().startTime,
+            },
+          });
+        } else {
+          setRoom(room);
+          socket.emit("joinRoom", data.codeforcesHandle, room, 2);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
-  const problem_generation = async(p1, p2, ts, room) => {
+  const problem_generation = async (p1, p2, ts, room) => {
     const db = getDatabase();
     const newProblems = [];
     const problemLinks = [];
@@ -124,13 +134,29 @@ export default function RoomList() {
     const contestLength = 1800000;
     players.push(p1);
     players.push(p2);
-    for (let ratingValue = startRating; ratingValue < startRating + 500; ratingValue += 100) {
+    for (
+      let ratingValue = startRating;
+      ratingValue < startRating + 500;
+      ratingValue += 100
+    ) {
       emptyarr.push(2000000000);
-      await get(child(ref(db), 'problems/' + ratingValue)).then((snapshot) => {
-        newProblems.push(snapshot.val().problemsetList[Math.floor(Math.random() * snapshot.val().problemsetList.length)]);
-        let linkUrl = "https://codeforces.com/contest/" + newProblems[(ratingValue - startRating) / 100].contestId + "/problem/" + newProblems[(ratingValue - startRating) / 100].index;
-        let problemName = newProblems[(ratingValue - startRating) / 100].contestId + newProblems[(ratingValue - startRating) / 100].index + " - " + newProblems[(ratingValue - startRating) / 100].name;
-        let points = (ratingValue - startRating + 100);
+      await get(child(ref(db), "problems/" + ratingValue)).then((snapshot) => {
+        newProblems.push(
+          snapshot.val().problemsetList[
+            Math.floor(Math.random() * snapshot.val().problemsetList.length)
+          ]
+        );
+        let linkUrl =
+          "https://codeforces.com/contest/" +
+          newProblems[(ratingValue - startRating) / 100].contestId +
+          "/problem/" +
+          newProblems[(ratingValue - startRating) / 100].index;
+        let problemName =
+          newProblems[(ratingValue - startRating) / 100].contestId +
+          newProblems[(ratingValue - startRating) / 100].index +
+          " - " +
+          newProblems[(ratingValue - startRating) / 100].name;
+        let points = ratingValue - startRating + 100;
         problemLinks.push({
           contestId: newProblems[(ratingValue - startRating) / 100].contestId,
           problemIndex: newProblems[(ratingValue - startRating) / 100].index,
@@ -138,11 +164,11 @@ export default function RoomList() {
           points: points,
           solved: "Unsolved",
           problemName: problemName,
-          problemNumber: (ratingValue - startRating) / 100
+          problemNumber: (ratingValue - startRating) / 100,
         });
       });
     }
-    await update(ref(db, 'duelRoom/' + room), {
+    await update(ref(db, "duelRoom/" + room), {
       players: players,
       problems: newProblems,
       problemLinks: problemLinks,
@@ -153,75 +179,84 @@ export default function RoomList() {
       startTime: ts,
       endTime: ts + contestLength,
       resultMessage: "",
-      ended: false
+      ended: false,
     });
-  }
+  };
 
-  const moveToDuelRoom = async(p1, p2, ts, rr, type) => {
+  const moveToDuelRoom = async (p1, p2, ts, rr, type) => {
     try {
-      setError('');
+      setError("");
       if (type == 2) {
         await problem_generation(p1, p2, ts, rr);
       } else {
         await problem_generation(p1, p2, ts, rr + "_unused");
       }
-      navigate('/lobby', {
+      navigate("/lobby", {
         state: {
           p1: p1,
           p2: p2,
           roomID: rr,
-          startTime: ts
-        }
+          startTime: ts,
+        },
       });
     } catch (err) {
       setError(`${err}`);
     }
-  }
-  
-  socket.on('startDuel', (p1, p2, ts, rr, type) => {
+  };
+
+  socket.on("startDuel", (p1, p2, ts, rr, type) => {
     setReady(true);
     moveToDuelRoom(p1, p2, ts, rr, type);
   });
 
-  function handleLeave (e) {
+  function handleLeave(e) {
     setStarted(false);
     setRoom("");
-    socket.emit('leaveRoomWhenWaiting');
+    socket.emit("leaveRoomWhenWaiting");
   }
-  
+
   return (
     <div>
-      {started ?
+      {started ? (
         <div className="auth-form-container">
-          {ready ? 
+          {ready ? (
             <div>
               <p>Both Players are ready!</p>
-              {error && <Alert variant='danger'>{error}</Alert>}
+              {error && <Alert variant="danger">{error}</Alert>}
             </div>
-            :
+          ) : (
             <div>
               <p>You are in room {room}, waiting for opponent!</p>
-              <button onClick={handleLeave}>
-                Back
-              </button>
+              <button onClick={handleLeave}>Back</button>
             </div>
-          }
+          )}
         </div>
-        :
+      ) : (
         <div className="auth-form-container">
           <h3>Enter room code to host/join</h3>
           <p>{isValid ? null : error}</p>
           <p>{isFull ? "Room is full" : null}</p>
-          <input required name="code" type="text" value={room} onChange={handleRoom} maxLength={10}></input>
+          <input
+            required
+            name="code"
+            type="text"
+            value={room}
+            onChange={handleRoom}
+            maxLength={10}
+          ></input>
           <br />
-          <button className ="goButton" onClick={handleJoinRoom}>Join Room</button>
+          <button className="goButton" onClick={handleJoinRoom}>
+            Join Room
+          </button>
           <br />
-          <button className ="goButton" onClick={handleCreateRoom}>Create New Room</button>
+          <button className="goButton" onClick={handleCreateRoom}>
+            Create New Room
+          </button>
           <div className="link-button">
             <Link to="/">Cancel</Link>
           </div>
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }

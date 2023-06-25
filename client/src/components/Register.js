@@ -1,42 +1,42 @@
-import React, { useState } from 'react';
-import { Alert } from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const register = useAuth()?.register;
   const addUserInformationToDatabase = useAuth()?.addUserInformationToDatabase;
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  
-  const handleSubmit = async(e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      return setError('Passwords do not match!');
+      return setError("Passwords do not match!");
     }
     if (password.length < 6) {
-      return setError('Password must be at least 6 characters long!');
+      return setError("Password must be at least 6 characters long!");
     }
     try {
       await register(email, password);
       await addUserInformationToDatabase();
       setLoading(true);
-      setError('');
-      navigate('/');
+      setError("");
+      navigate("/");
     } catch {
-      setError('Failed to create a new account');
+      setError("Failed to create a new account");
     }
     setLoading(false);
-  }
+  };
 
   return (
     <div className="auth-form-container">
       <h2>Register</h2>
-      {error && <Alert variant='danger'>{error}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
       <form className="register-form" onSubmit={handleSubmit}>
         <label for="email">Email</label>
         <input
@@ -65,13 +65,15 @@ const Register = () => {
           id="confirmPassword"
           name="confirmPassword"
         />
-        <button disabled={loading} type="submit">Register</button>
+        <button disabled={loading} type="submit">
+          Register
+        </button>
       </form>
       <div className="link-button">
         Already have an account? <Link to="/login">Login</Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Register;

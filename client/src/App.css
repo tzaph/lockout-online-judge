@@ -4,20 +4,25 @@
   min-height: 100vh;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(90deg, #66D3FA , #D5F3FE 50%, #B2FFFF );
+  background-image: linear-gradient(90deg, #66d3fa, #d5f3fe 50%, #b2ffff);
 }
 
-.auth-form-container, .login-form, .register-form, .profile-container, .dashboard-container {
+.auth-form-container,
+.login-form,
+.register-form,
+.profile-container,
+.dashboard-container {
   display: flex;
   flex-direction: column;
 }
 
-.auth-form-container, .profile-container {
+.auth-form-container,
+.profile-container {
   padding: 5rem;
-  border: 5px solid #2565AE;
+  border: 5px solid #2565ae;
   border-radius: 20px;
   margin: 0.5rem;
-  background-color: #D5F3FE;
+  background-color: #d5f3fe;
 }
 
 label {
@@ -51,7 +56,7 @@ button {
 }
 
 .nav {
-  background-color: #2565AE;
+  background-color: #2565ae;
   color: white;
   border-radius: 20px;
   display: flex;
@@ -79,7 +84,7 @@ button {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 .nav li.active {

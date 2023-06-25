@@ -1,6 +1,6 @@
-import { getAuth } from "firebase/auth"
-import  {getDatabase} from "firebase/database"
-import { initializeApp } from "firebase/app"
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { initializeApp } from "firebase/app";
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY + "",
@@ -10,9 +10,9 @@ const app = initializeApp({
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL
-})
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+});
 
-const auth = getAuth()
+const auth = getAuth();
 
-export {app, auth}
+export { app, auth };
