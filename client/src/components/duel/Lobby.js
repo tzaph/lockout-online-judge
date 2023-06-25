@@ -1,15 +1,12 @@
 import { getDatabase, update, get, child, ref } from "firebase/database";
 import React, { useState, useRef, useEffect } from "react";
-import { useAuth } from '../../contexts/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 import axios from "axios"
 
-export default function Lobby(props) {
-  const { currentUser } = useAuth();
+export default function Lobby() {
   const db = getDatabase();
   const propState = useLocation();
-  const startRating = 800;
-  const contestLength = 2700000; // 1 minute = 60000, currently set to 45 minutes
+  const contestLength = 1800000; // 1 minute = 60000, currently set to 45 minutes
   const [timer, setTimer] = useState("00:00:00");
   const p1data = propState.state.p1;
   const p2data = propState.state.p2;
@@ -40,106 +37,48 @@ export default function Lobby(props) {
     setEndTime(startTime + contestLength);
     setP1handle(p1.name);
     setP2handle(p2.name);
-    let hasProblems = false;
-    let isPlayer1 = false;
-    await get(child(ref(db), 'users/' + currentUser.uid)).then((snapshot) => {
-      if (snapshot.exists()) {
-        if (snapshot.val().codeforcesHandle == p1.name)
-          isPlayer1 = true;
-      } else {
 
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
     await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
       if (snapshot.exists()) {
         if (snapshot.val().problemLinks[0].contestId != "") {
-          hasProblems = true;
+          setP1handle(p1.name);
+          setP2handle(p2.name);
           setProblems(snapshot.val().problemLinks);
           setEndTime(snapshot.val().endTime);
           setP1sub(snapshot.val().player1SubmissionId);
           setP2sub(snapshot.val().player2SubmissionId);
           setP1points(snapshot.val().player1points);
           setP2points(snapshot.val().player2points);
-          setResultMessage(snapshot.val().resultMessage);
-          setEnded(snapshot.val().ended);
+
+          if ((Date.now() > snapshot.val().endTime || snapshot.val().player1points > 750 || snapshot.val().player2points > 750)) {
+            let msg = "";
+            if (snapshot.val().player1points == snapshot.val().player2points) {
+              msg = "Contest ended with a draw!";
+            } else if (snapshot.val().player1points > snapshot.val().player2points) {
+              msg = "Contest ended, " + p1handle + " wins!";
+            } else if (snapshot.val().player1points < snapshot.val().player2points) {
+              msg = "Contest ended, " + p2handle + " wins!";
+            }
+            setResultMessage(msg);
+            setEnded(true);
+            update(ref(db, 'duelRoom/' + roomID), {
+              resultMessage: msg,
+              ended: true,
+            });
+          } else {
+            setResultMessage(snapshot.val().resultMessage);
+            setEnded(snapshot.val().ended);
+          }
         }
         else
-          hasProblems = false;
+          throw "No problems generated";
       } else {
-        hasProblems = false;
+        throw "No problems generated";
       }
     }).catch((error) => {
       console.error(error);
     });
 
-    if (!hasProblems && isPlayer1) {
-      // insert new problems here
-      const newProblems = [];
-      const problemLinks = [];
-      const players = [];
-      const emptyarr = [];
-      players.push(p1);
-      players.push(p2);
-      for (let ratingValue = startRating; ratingValue < startRating + 500; ratingValue += 100) {
-        emptyarr.push(2000000000);
-        await get(child(ref(db), 'problems/' + ratingValue)).then((snapshot) => {
-          newProblems.push(snapshot.val().problemsetList[Math.floor(Math.random() * snapshot.val().problemsetList.length)]);
-          let linkUrl = "https://codeforces.com/contest/" + newProblems[(ratingValue - startRating) / 100].contestId + "/problem/" + newProblems[(ratingValue - startRating) / 100].index;
-          let problemName = newProblems[(ratingValue - startRating) / 100].contestId + newProblems[(ratingValue - startRating) / 100].index + " - " + newProblems[(ratingValue - startRating) / 100].name;
-          let points = (ratingValue - startRating + 100);
-          problemLinks.push({
-            contestId: newProblems[(ratingValue - startRating) / 100].contestId,
-            problemIndex: newProblems[(ratingValue - startRating) / 100].index,
-            problemLink: linkUrl,
-            points: points,
-            solved: "Unsolved",
-            problemName: problemName,
-            problemNumber: (ratingValue - startRating) / 100
-          });
-        });
-        setP1sub(emptyarr);
-        setP2sub(emptyarr);
-        setProblems(problemLinks);
-      }
-      await update(ref(db, 'duelRoom/' + roomID), {
-        players: players,
-        problems: newProblems,
-        problemLinks: problemLinks,
-        player1SubmissionId: p1sub,
-        player2SubmissionId: p2sub,
-        player1points: 0,
-        player2points: 0,
-        startTime: startTime,
-        endTime: startTime + contestLength,
-        resultMessage: "",
-        ended: false
-      });
-    } else if (!hasProblems) {
-      await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
-        if (snapshot.exists()) {
-          if (snapshot.val().problemLinks[0].contestId != "") {
-            hasProblems = true;
-            setProblems(snapshot.val().problemLinks);
-            setEndTime(snapshot.val().endTime);
-            startTime = snapshot.val().startTime;
-            setP1sub(snapshot.val().player1SubmissionId);
-            setP2sub(snapshot.val().player2SubmissionId);
-            setP1points(snapshot.val().player1points);
-            setP2points(snapshot.val().player2points);
-            setResultMessage(snapshot.val().resultMessage);
-            setEnded(snapshot.val().ended);
-          }
-          else
-            hasProblems = false;
-        } else {
-          hasProblems = false;
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-    }
     setLoading(false);
   };
 
@@ -149,7 +88,7 @@ export default function Lobby(props) {
     const minutes = Math.floor((total / 1000 / 60) % 60);
     const hours = Math.floor((total / 1000 / 60 / 60) % 24);
     return {
-        total, hours, minutes, seconds
+      total, hours, minutes, seconds
     };
   }
   const displayTimer = () => {
@@ -185,23 +124,7 @@ export default function Lobby(props) {
 
     setLoading(true);
     if (problems[0].contestId == "") {
-      await get(child(ref(db), 'duelRoom/' + roomID)).then((snapshot) => {
-        if (snapshot.exists()) {
-          if (snapshot.val().problemLinks[0].contestId != "") {
-            setProblems(snapshot.val().problemLinks);
-            setEndTime(snapshot.val().endTime);
-            setP1sub(snapshot.val().player1SubmissionId);
-            setP2sub(snapshot.val().player2SubmissionId);
-            setP1points(snapshot.val().player1points);
-            setP2points(snapshot.val().player2points);
-            setResultMessage(snapshot.val().resultMessage);
-            setEnded(snapshot.val().ended);
-          }
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-      setLoading(false);
+      await renderProblems(p1data, p2data);
       return;
     }
 
@@ -293,8 +216,7 @@ export default function Lobby(props) {
     <div className="auth-form-container">
       <h3>Room {roomID}: {p1handle} vs {p2handle}</h3>
       <h4>{p1points} - {p2points}</h4>
-      <p>{timer}</p>
-      <p>{resultMessage}</p>
+      <p>{ended ? resultMessage : timer}</p>
       <table>
         <tr>
           <th>Problems</th>

@@ -65,8 +65,6 @@ export function AuthProvider({ children }){
     get(ref(db, 'users/' + currentUser.uid)).then((snapshot) => {
       if (snapshot.exists()) {
         setReturnValue((snapshot.val()).codeforcesHandle);
-      } else {
-        
       }
     });
     return returnValue;
