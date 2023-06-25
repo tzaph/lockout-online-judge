@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://stellar-cactus-9b498b.netlify.app",
+    origin: "https://lockout-online-judge.netlify.app",
     methods: ["GET", "POST"],
   },
 });
