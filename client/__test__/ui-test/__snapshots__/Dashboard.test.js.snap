@@ -29,12 +29,6 @@ exports[`<Dashboard /> Renders correctly 1`] = `
     >
       Update Profile
     </a>
-    <a
-      href="/refresh-problem-database"
-      onClick={[Function]}
-    >
-      Refresh Problem Database
-    </a>
   </div>
   <button
     className="button"
