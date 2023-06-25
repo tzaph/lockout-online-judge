@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { Alert } from 'react-bootstrap';
 import { getDatabase, ref, get, child } from 'firebase/database';
 
 export default function Dashboard() {
@@ -42,8 +43,9 @@ export default function Dashboard() {
         <label>Codeforces Handle: {data.codeforcesHandle}</label>
         <br></br>
         <Link to="/update-profile">Update Profile</Link>
-        <Link to="/refresh-problem-database">Refresh Problem Database</Link>
+        {data.admin ? <Link to="/refresh-problem-database">Refresh Problem Database</Link> : null}
       </div>
+      {error && <Alert variant='danger'>{error}</Alert>}
       <button className="button" onClick={handleLogout}>Logout</button>
     </div>
   );
