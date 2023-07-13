@@ -46,6 +46,7 @@ export default function Dashboard() {
         <label>Email: {data.email}</label>
         <label>Name: {data.name}</label>
         <label>Codeforces Handle: {data.codeforcesHandle}</label>
+        <label>Rating: {data.rating}</label>
         <br></br>
         <Link to="/update-profile">Update Profile</Link>
         {data.admin ? (

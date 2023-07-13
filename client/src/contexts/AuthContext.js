@@ -47,6 +47,7 @@ export function AuthProvider({ children }) {
       uid: auth.currentUser.uid,
       codeforcesHandle: "",
       name: "",
+      rating: 1400,
     });
   }
 
@@ -78,6 +79,34 @@ export function AuthProvider({ children }) {
     return returnValue;
   }
 
+  function updateRating(rating) {
+    const db = getDatabase();
+
+    return axios
+      .get(`https://codeforces.com/api/user.info?handles=${rating}`)
+      .then((res) => {
+        console.log("hi");
+        update(ref(db, "users/" + auth.currentUser.uid), {
+          ratingData: JSON.stringify(res.data.result[0]),
+          rating: rating,
+        });
+      })
+      .catch((err) => {
+        throw err.response.data.comment;
+      });
+  }
+
+  function getRating(currentUser) {
+    const db = getDatabase();
+    setReturnValue("");
+    get(ref(db, "users/" + currentUser.uid)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setReturnValue(snapshot.val().rating);
+      }
+    });
+    return returnValue;
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -95,6 +124,8 @@ export function AuthProvider({ children }) {
     addUserInformationToDatabase,
     updateCodeforcesHandle,
     getCodeforcesHandle,
+    updateRating,
+    getRating,
     currentUser,
   };
 
