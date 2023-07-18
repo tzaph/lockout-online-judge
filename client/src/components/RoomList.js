@@ -31,17 +31,25 @@ export default function RoomList() {
   }, []);
 
   const [room, setRoom] = useState("");
-  const [isFull, setFull] = useState(false);
   const [isValid, setValid] = useState(true);
   const [started, setStarted] = useState(false);
 
   socket.on("roomFull", () => {
+    setError("Room is full");
     setRoom("");
-    setFull(true);
+    setValid(false);
+    setTimeout(() => setValid(true), 5000);
   });
 
   socket.on("roomUnavailable", () => {
     setError("Room code is invalid");
+    setRoom("");
+    setValid(false);
+    setTimeout(() => setValid(true), 5000);
+  });
+
+  socket.on("dupeRoom", () => {
+    setError("You have joined this room");
     setRoom("");
     setValid(false);
     setTimeout(() => setValid(true), 5000);
@@ -124,7 +132,13 @@ export default function RoomList() {
       });
   };
 
-  const problem_generation = async (p1, p2, ts, room) => {
+  const problem_generation = async (p1, p2, ts, rr, tp) => {
+    let room = rr;
+    let opp = p1;
+    if (tp == 1) {
+      room = (rr + "_unused");
+      opp = p2;
+    }
     const db = getDatabase();
     const newProblems = [];
     const problemLinks = [];
@@ -181,16 +195,21 @@ export default function RoomList() {
       resultMessage: "",
       ended: false,
     });
+
+    await update(ref(db, "users/" + currentUser.uid), {
+      duelData: arrayUnion({
+        roomCode: rr,
+        opponent: opp,
+        time: ts,
+        duelType: "Custom Room"
+      })
+    });
   };
 
   const moveToDuelRoom = async (p1, p2, ts, rr, type) => {
     try {
       setError("");
-      if (type == 2) {
-        await problem_generation(p1, p2, ts, rr);
-      } else {
-        await problem_generation(p1, p2, ts, rr + "_unused");
-      }
+      await problem_generation(p1, p2, ts, rr, type);
       navigate("/lobby", {
         state: {
           p1: p1,
@@ -235,7 +254,6 @@ export default function RoomList() {
         <div className="auth-form-container">
           <h3>Enter room code to host/join</h3>
           <p>{isValid ? null : error}</p>
-          <p>{isFull ? "Room is full" : null}</p>
           <input
             required
             name="code"
