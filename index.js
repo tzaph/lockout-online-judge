@@ -76,18 +76,26 @@ io.on("connection", (socket) => {
             room: room,
           });
         } else {
-          console.log(
-            `${name}'s request to join room ${room} accepted (SECOND PLAYER)`
-          );
-          socket.join(room);
-          socket.emit("joinedRoom");
-
-          players.push({
-            id: socket.id,
-            name: name,
-            room: room,
-          });
-          start = true;
+          if (players[0].name == name) {
+            console.log(
+              `${name}'s request to join room ${room} rejected (ALREADY IN ROOM)`
+            );
+            socket.emit("dupeRoom");
+            return;
+          } else {
+            console.log(
+              `${name}'s request to join room ${room} accepted (SECOND PLAYER)`
+            );
+            socket.join(room);
+            socket.emit("joinedRoom");
+  
+            players.push({
+              id: socket.id,
+              name: name,
+              room: room,
+            });
+            start = true;
+          }
         }
 
         roomPlayers.set(room, players);

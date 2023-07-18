@@ -11,8 +11,6 @@ import NavBar from "./components/NavBar";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001");
 
 function App() {
   return (
