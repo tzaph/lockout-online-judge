@@ -7,6 +7,9 @@ export default function Navbar() {
         Lockout OJ
       </Link>
       <ul>
+        <CustomLink to="/problem-recommendation">
+          Problem Recommendation
+        </CustomLink>
         <CustomLink to="/room-list">Join Room</CustomLink>
       </ul>
     </nav>

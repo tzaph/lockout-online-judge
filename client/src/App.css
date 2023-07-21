@@ -10,6 +10,7 @@
 .auth-form-container,
 .login-form,
 .register-form,
+.problem-recommendation-form,
 .profile-container,
 .dashboard-container {
   display: flex;
