@@ -195,15 +195,6 @@ export default function RoomList() {
       resultMessage: "",
       ended: false,
     });
-
-    await update(ref(db, "users/" + currentUser.uid), {
-      duelData: arrayUnion({
-        roomCode: rr,
-        opponent: opp,
-        time: ts,
-        duelType: "Custom Room"
-      })
-    });
   };
 
   const moveToDuelRoom = async (p1, p2, ts, rr, type) => {
