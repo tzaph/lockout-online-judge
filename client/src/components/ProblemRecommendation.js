@@ -29,6 +29,26 @@ export default function ProblemRecommendation() {
     const db = getDatabase();
     let doneProblem = true;
     await get(child(ref(db), "problems/" + rating)).then((snapshot) => {
+      if (!data.codeforcesHandle) {
+        let newProblem =
+          snapshot.val().problemsetList[
+            Math.floor(Math.random() * snapshot.val().problemsetList.length)
+          ];
+        let linkUrl =
+          "https://codeforces.com/contest/" +
+          newProblem.contestId +
+          "/problem/" +
+          newProblem.index;
+        let problemName =
+          newProblem.contestId + newProblem.index + " - " + newProblem.name;
+        setProblem({
+          contestId: newProblem.contestId,
+          problemIndex: newProblem.index,
+          problemLink: linkUrl,
+          problemName: problemName,
+        });
+        return;
+      }
       while (doneProblem) {
         let newProblem =
           snapshot.val().problemsetList[
@@ -99,7 +119,9 @@ export default function ProblemRecommendation() {
       return;
     }
     try {
-      listAllSubmissions(data.codeforcesHandle);
+      if (data.codeforcesHandle) {
+        listAllSubmissions(data.codeforcesHandle);
+      }
       await generateProblem(e.target.rating.value);
       setLoading(true);
       setError("");
