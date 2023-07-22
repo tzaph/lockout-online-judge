@@ -8,6 +8,7 @@ import RefreshProblemDatabase from "./components/RefreshProblemDatabase";
 import RoomList from "./components/RoomList";
 import Lobby from "./components/duel/Lobby";
 import NavBar from "./components/NavBar";
+import ProblemRecommendation from "./components/ProblemRecommendation";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -58,6 +59,14 @@ function App() {
                 element={
                   <PrivateRoute>
                     <Lobby />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/problem-recommendation"
+                element={
+                  <PrivateRoute>
+                    <ProblemRecommendation />
                   </PrivateRoute>
                 }
               />

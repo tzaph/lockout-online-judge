@@ -5,7 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDatabase, update, ref, get, child } from "firebase/database";
 
 import io from "socket.io-client";
-const socket = io.connect("https://lockout-online-judge-production.up.railway.app/");
+const socket = io.connect(
+  "https://lockout-online-judge-production.up.railway.app/"
+);
 
 export default function RoomList() {
   const [data, setData] = useState({});
@@ -136,7 +138,7 @@ export default function RoomList() {
     let room = rr;
     let opp = p1;
     if (tp == 1) {
-      room = (rr + "_unused");
+      room = rr + "_unused";
       opp = p2;
     }
     const db = getDatabase();
