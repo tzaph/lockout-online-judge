@@ -61,7 +61,7 @@ export default function Dashboard() {
             <td>{data.rating}</td>
           </tr>
         </table>
-        <br></br>
+        <br />
         <Link to="/update-profile">Update Profile</Link>
         {data.admin ? (
           <Link to="/refresh-problem-database">Refresh Problem Database</Link>

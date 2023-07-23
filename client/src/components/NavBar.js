@@ -7,10 +7,16 @@ export default function Navbar() {
         Lockout OJ
       </Link>
       <ul>
-        <CustomLink to="/problem-recommendation">
-          Problem Recommendation
-        </CustomLink>
+        <CustomLink to="/problem-recommendation">Problem Recommendation</CustomLink>
+      </ul>
+      <ul>
         <CustomLink to="/room-list">Join Room</CustomLink>
+      </ul>
+      <ul>
+        <CustomLink to="/matchmaking">Ranked Duel</CustomLink>
+      </ul>
+      <ul>
+        <CustomLink to="/duel-history">Duel History</CustomLink>
       </ul>
     </nav>
   );

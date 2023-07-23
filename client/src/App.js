@@ -6,9 +6,11 @@ import Dashboard from "./components/Dashboard";
 import UpdateProfile from "./components/UpdateProfile";
 import RefreshProblemDatabase from "./components/RefreshProblemDatabase";
 import RoomList from "./components/RoomList";
+import Matchmaking from "./components/Matchmaking";
+import DuelHistory from "./components/DuelHistory";
 import Lobby from "./components/duel/Lobby";
 import NavBar from "./components/NavBar";
-import ProblemRecommendation from "./components/ProblemRecommendation";
+import ProblemRecommendation from "./components/ProblemRecommendation.js";
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -51,6 +53,22 @@ function App() {
                 element={
                   <PrivateRoute>
                     <RoomList />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/matchmaking"
+                element={
+                  <PrivateRoute>
+                    <Matchmaking />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/duel-history"
+                element={
+                  <PrivateRoute>
+                    <DuelHistory />
                   </PrivateRoute>
                 }
               />

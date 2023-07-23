@@ -48,6 +48,8 @@ export function AuthProvider({ children }) {
       codeforcesHandle: "",
       name: "",
       rating: 1400,
+      duelHistory: [],
+      currentRoom: "-"
     });
   }
 

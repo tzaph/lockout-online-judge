@@ -8,17 +8,19 @@
 }
 
 .auth-form-container,
+.problem-recommendation-form,
 .login-form,
 .register-form,
-.problem-recommendation-form,
 .profile-container,
-.dashboard-container {
+.dashboard-container,
+.duel-container {
   display: flex;
   flex-direction: column;
 }
 
 .auth-form-container,
-.profile-container {
+.profile-container,
+.duel-container {
   padding: 5rem;
   border: 5px solid #2565ae;
   border-radius: 20px;
