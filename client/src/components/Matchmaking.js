@@ -198,7 +198,6 @@ export default function RoomList() {
     }
     if (data.currentRoom != "-") {
       setError("Please enter your unfinished duel with room code " + data.currentRoom);
-      setRoom("");
       setValid(false);
       setTimeout(() => setValid(true), 5000);
       return;
