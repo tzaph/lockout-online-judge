@@ -9,7 +9,7 @@ export default function DuelHistory() {
   const [loading, setLoading] = useState(false);
   const [emptyHistory, setEmptyHistory] = useState(false);
   const [msg, setMsg] = useState("");
-  const { currentUser } = useAuth();
+  const currentUser = useAuth()?.currentUser;
 
   const Getdata = () => {
     get(child(ref(getDatabase()), "users/" + currentUser.uid))
@@ -39,21 +39,23 @@ export default function DuelHistory() {
         duelHistory: tmparr,
       });
       setEmptyHistory(true);
-      setMsg("You do not have any recent duels")
+      setMsg("You do not have any recent duels");
       return;
-    }    
+    }
     let len = li.length;
 
     if (len == 0) {
       setEmptyHistory(true);
-      setMsg("You do not have any recent duels")
+      setMsg("You do not have any recent duels");
       return;
     }
 
     for (let i = 0; i < len; i++) {
       if (i == 0 || li[i].roomCode != li[i - 1].roomCode) {
         tmparr.push(li[i]);
-        tmpmsgarr.push(li[i].duelType + " " + li[i].roomCode + " vs. " + li[i].opponent.name);
+        tmpmsgarr.push(
+          li[i].duelType + " " + li[i].roomCode + " vs. " + li[i].opponent.name
+        );
       }
     }
     await update(ref(getDatabase(), "users/" + currentUser.uid), {
@@ -62,7 +64,7 @@ export default function DuelHistory() {
     setArr(tmparr);
     tmpmsgarr.reverse();
     setMsgArr(tmpmsgarr);
-  }
+  };
 
   return (
     <div className="profile-container">
@@ -72,12 +74,9 @@ export default function DuelHistory() {
       <p>{emptyHistory ? msg : null}</p>
       <table>
         {msgArr.map((val) => {
-          return (
-            <p>{val}</p>
-          );
+          return <p>{val}</p>;
         })}
       </table>
-      
     </div>
-  )
+  );
 }

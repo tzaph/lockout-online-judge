@@ -1,35 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ProblemRecommendation /> Renders correctly 1`] = `
+exports[`<Matchmaking /> Renders correctly 1`] = `
 <div>
   <div
     className="duel-container"
   >
     <h3>
-      Enter room code to host/join
+      Ranked Duel
     </h3>
     <p />
-    <input
-      maxLength={6}
-      name="code"
-      onChange={[Function]}
-      required={true}
-      type="text"
-      value=""
-    />
+    <p>
+       rating (
+      ?
+       rank)
+    </p>
     <br />
     <button
       className="goButton"
+      disable={false}
       onClick={[Function]}
     >
-      Join Room
-    </button>
-    <br />
-    <button
-      className="goButton"
-      onClick={[Function]}
-    >
-      Create New Room
+      Enter Matchmaking
     </button>
     <div
       className="link-button"

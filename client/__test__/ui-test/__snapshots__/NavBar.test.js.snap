@@ -22,6 +22,8 @@ exports[`<NavBar /> Renders correctly 1`] = `
         Problem Recommendation
       </a>
     </li>
+  </ul>
+  <ul>
     <li
       className=""
     >
@@ -30,6 +32,30 @@ exports[`<NavBar /> Renders correctly 1`] = `
         onClick={[Function]}
       >
         Join Room
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li
+      className=""
+    >
+      <a
+        href="/matchmaking"
+        onClick={[Function]}
+      >
+        Ranked Duel
+      </a>
+    </li>
+  </ul>
+  <ul>
+    <li
+      className=""
+    >
+      <a
+        href="/duel-history"
+        onClick={[Function]}
+      >
+        Duel History
       </a>
     </li>
   </ul>
