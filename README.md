@@ -14,7 +14,7 @@ We want to bring a fun and unique programming experience for people who want to 
 5. Codeforces Handle Verification
 
 ## Detailed README
-For a more detailed README, you can refer to [https://docs.google.com/document/d/1N2S2qaZLzN9wRzKnduR5fuC1jcitLvtF6Mg9ecTPAH0/edit?usp=sharing](https://docs.google.com/document/d/1dZBiLEUVagGh1Byox3X2_eCJgqFyIuGh9ZWiNLA2XTo/edit?usp=sharing)https://docs.google.com/document/d/1dZBiLEUVagGh1Byox3X2_eCJgqFyIuGh9ZWiNLA2XTo/edit?usp=sharing
+For a more detailed README, you can refer to [https://docs.google.com/document/d/1N2S2qaZLzN9wRzKnduR5fuC1jcitLvtF6Mg9ecTPAH0/edit?usp=sharing](https://docs.google.com/document/d/1dZBiLEUVagGh1Byox3X2_eCJgqFyIuGh9ZWiNLA2XTo/edit?usp=sharing)
 
 
 
