@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ProblemRecommendation /> Renders correctly 1`] = `
+exports[`<RoomList /> Renders correctly 1`] = `
 <div>
   <div
     className="duel-container"
