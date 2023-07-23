@@ -149,11 +149,13 @@ export default function UpdateProfile() {
           Update
         </button>
       </form>
+      <br></br>
       Please submit a compile error to{" "}
       <a href={problem.problemLink} target="_blank">
         {problem.problemName}
       </a>{" "}
       to verify your Codeforces handle.
+      <br></br>
       <div className="link-button">
         <Link to="/">Cancel</Link>
       </div>

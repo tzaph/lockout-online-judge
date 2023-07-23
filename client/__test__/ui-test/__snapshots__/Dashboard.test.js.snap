@@ -22,6 +22,9 @@ exports[`<Dashboard /> Renders correctly 1`] = `
     <label>
       Codeforces Handle: 
     </label>
+    <label>
+      Rating: 
+    </label>
     <br />
     <a
       href="/update-profile"

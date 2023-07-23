@@ -16,6 +16,16 @@ exports[`<NavBar /> Renders correctly 1`] = `
       className=""
     >
       <a
+        href="/problem-recommendation"
+        onClick={[Function]}
+      >
+        Problem Recommendation
+      </a>
+    </li>
+    <li
+      className=""
+    >
+      <a
         href="/room-list"
         onClick={[Function]}
       >
