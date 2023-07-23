@@ -40,6 +40,14 @@ exports[`<UpdateProfile /> Renders correctly 1`] = `
       Update
     </button>
   </form>
+  Please submit a compile error to
+   
+  <a
+    href=""
+    target="_blank"
+  />
+   
+  to verify your Codeforces handle.
   <div
     className="link-button"
   >

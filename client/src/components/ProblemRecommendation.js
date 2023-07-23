@@ -5,6 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, child } from "firebase/database";
 import axios from "axios";
 
+export function isRatingValid(str) {
+  if (str.trim() === "") {
+    return false;
+  }
+  if (isNaN(str)) {
+    return false;
+  }
+  if (str < 800 || str > 3500) {
+    return false;
+  }
+  if (str % 100 != 0) {
+    return false;
+  }
+  return true;
+}
+
 export default function ProblemRecommendation() {
   const [error, setError] = useState("");
   const [data, setData] = useState({
@@ -82,22 +98,6 @@ export default function ProblemRecommendation() {
     });
   };
 
-  function isValidRating(str) {
-    if (str.trim() === "") {
-      return false;
-    }
-    if (isNaN(str)) {
-      return false;
-    }
-    if (str < 800 || str > 3500) {
-      return false;
-    }
-    if (str % 100 != 0) {
-      return false;
-    }
-    return true;
-  }
-
   function listAllSubmissions(codeforcesHandle) {
     return axios
       .get(`https://codeforces.com/api/user.status?handle=${codeforcesHandle}`)
@@ -112,7 +112,7 @@ export default function ProblemRecommendation() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSuccess(false);
-    if (!isValidRating(e.target.rating.value)) {
+    if (!isRatingValid(e.target.rating.value)) {
       setError(
         `Rating should be an integer multiple of 100 between 800 and 3500`
       );
@@ -167,6 +167,7 @@ export default function ProblemRecommendation() {
           Get New Problem Recommendation
         </button>
       </form>
+      <br></br>
       <div className="link-button">
         <Link to="/">Cancel</Link>
       </div>

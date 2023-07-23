@@ -4,14 +4,13 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
 export default function Lobby() {
-  const db = getDatabase();
   const propState = useLocation();
   const contestLength = 1800000; // 1 minute = 60000, currently set to 45 minutes
   const [timer, setTimer] = useState("00:00:00");
-  const p1data = propState.state.p1;
-  const p2data = propState.state.p2;
-  const roomID = propState.state.roomID;
-  const startTime = propState.state.startTime;
+  const p1data = propState.state?.p1;
+  const p2data = propState.state?.p2;
+  const roomID = propState.state?.roomID;
+  const startTime = propState.state?.startTime;
   const [resultMessage, setResultMessage] = useState("");
   const [ended, setEnded] = useState(false);
   const [endTime, setEndTime] = useState(0);
@@ -78,6 +77,7 @@ export default function Lobby() {
   const Ref = useRef(null);
 
   const renderProblems = async (p1, p2) => {
+    const db = getDatabase();
     setLoading(true);
     setEndTime(startTime + contestLength);
     setP1handle(p1.name);
@@ -181,6 +181,7 @@ export default function Lobby() {
   }
 
   const refreshPage = async () => {
+    const db = getDatabase();
     if (ended) {
       return;
     }

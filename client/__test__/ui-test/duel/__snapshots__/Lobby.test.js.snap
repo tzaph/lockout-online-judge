@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Lobby /> Renders correctly 1`] = `
+<div
+  className="auth-form-container"
+>
+  <h3>
+    Room 
+    : 
+     vs 
+  </h3>
+  <h4>
+    0
+     - 
+    0
+  </h4>
+  <p>
+    00:00:00
+  </p>
+  <table>
+    <tr>
+      <th>
+        Problems
+      </th>
+      <th>
+        Points
+      </th>
+      <th>
+        Status
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
+      <td />
+    </tr>
+  </table>
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Refresh
+  </button>
+  <div
+    className="link-button"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Leave
+    </a>
+  </div>
+</div>
+`;

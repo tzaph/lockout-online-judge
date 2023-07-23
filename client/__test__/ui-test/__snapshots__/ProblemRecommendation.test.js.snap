@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ProblemRecommendation /> Renders correctly 1`] = `
+<div
+  className="auth-form-container"
+>
+  <h2>
+    Problem Recommendation
+  </h2>
+  <form
+    className="problem-recommendation-form"
+    onSubmit={[Function]}
+  >
+    <label
+      for="rating"
+    >
+      Rating (800 - 3500)
+    </label>
+    <input
+      defaultValue={800}
+      id="rating"
+      name="rating"
+      type="rating"
+    />
+    <button
+      disabled={false}
+      type="submit"
+    >
+      Get New Problem Recommendation
+    </button>
+  </form>
+  <div
+    className="link-button"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Cancel
+    </a>
+  </div>
+</div>
+`;

@@ -43,10 +43,24 @@ export default function Dashboard() {
       <h1>Dashboard</h1>
       <div className="profile-container">
         <h2>Profile</h2>
-        <label>Email: {data.email}</label>
-        <label>Name: {data.name}</label>
-        <label>Codeforces Handle: {data.codeforcesHandle}</label>
-        <label>Rating: {data.rating}</label>
+        <table>
+          <tr align="left">
+            <td>Email:</td>
+            <td>{data.email}</td>
+          </tr>
+          <tr align="left">
+            <td>Name:</td>
+            <td>{data.name}</td>
+          </tr>
+          <tr align="left">
+            <td>Codeforces Handle:</td>
+            <td>{data.codeforcesHandle}</td>
+          </tr>
+          <tr align="left">
+            <td>Rating:</td>
+            <td>{data.rating}</td>
+          </tr>
+        </table>
         <br></br>
         <Link to="/update-profile">Update Profile</Link>
         {data.admin ? (

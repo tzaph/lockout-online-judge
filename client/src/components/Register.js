@@ -3,6 +3,25 @@ import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
+export function isEmailValid(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+export function isPasswordMatch(pass, confirmPass) {
+  if (pass !== confirmPass) {
+    return false;
+  }
+  return true;
+}
+
+export function isPasswordLong(pass) {
+  if (pass.length < 6) {
+    return false;
+  }
+  return true;
+}
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,10 +34,13 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
+    if (!isEmailValid(email)) {
+      return setError("Please enter a valid email!");
+    }
+    if (!isPasswordMatch(password, confirmPassword)) {
       return setError("Passwords do not match!");
     }
-    if (password.length < 6) {
+    if (!isPasswordLong(password)) {
       return setError("Password must be at least 6 characters long!");
     }
     try {

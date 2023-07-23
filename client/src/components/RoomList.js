@@ -11,7 +11,7 @@ const socket = io.connect(
 
 export default function RoomList() {
   const [data, setData] = useState({});
-  const { currentUser } = useAuth();
+  const currentUser = useAuth()?.currentUser;
   const [ready, setReady] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
