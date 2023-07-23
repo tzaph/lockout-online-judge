@@ -97,6 +97,13 @@ export default function RoomList() {
       setTimeout(() => setValid(true), 5000);
       return;
     }
+    if (data.currentRoom != "-") {
+      setError("Please enter your unfinished duel with room code " + data.currentRoom);
+      setRoom("");
+      setValid(false);
+      setTimeout(() => setValid(true), 5000);
+      return;
+    }
 
     setStarted(true);
   }
@@ -206,10 +213,8 @@ export default function RoomList() {
     const contestLength = 60000 * dl;
     players.push(p1);
     players.push(p2);
-    console.log("time " + dl);
     for (let idx = 0; idx < 5; idx += 1) {
       let ratingValue = psr[idx];
-      console.log(ratingValue);
       emptyarr.push(2000000000);
       await get(child(ref(db), "problems/" + ratingValue)).then((snapshot) => {
         newProblems.push(
@@ -257,12 +262,10 @@ export default function RoomList() {
 
   const moveToDuelRoom = async (p1, p2, ts, rr, dl, psr, type, isRanked) => {
     try {
-      console.log(type);
       setError("");
 
       if (type <= 2) {
         let playerDuelHistory = data.duelHistory;
-        console.log(data.duelHistory);
         if (playerDuelHistory == undefined) playerDuelHistory = [];
         let opp = p1;
         if (type == 1) opp = p2;
@@ -299,9 +302,6 @@ export default function RoomList() {
 
   socket.on("startDuel", (p1, p2, ts, rr, dl, psr, type, isRanked) => {
     setReady(true);
-    console.log(ts);
-    console.log(dl);
-    console.log(type);
     moveToDuelRoom(p1, p2, ts, rr, dl, psr, type, isRanked);
   });
 

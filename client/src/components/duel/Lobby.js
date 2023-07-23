@@ -135,7 +135,6 @@ export default function Lobby() {
               snapshot.val().player1points > 750 ||
               snapshot.val().player2points > 750
             ) {
-              console.log("hi");
               setEnded(true);
               hasEnded = true;
               update(ref(db, "duelRoom/" + roomID), {
@@ -154,6 +153,9 @@ export default function Lobby() {
       });
 
     if (hasEnded) {
+      await update(ref(getDatabase(), "users/" + userData.uid), {
+        currentRoom: "-",
+      });
       if (isRanked) {
         let maxrat = p1data.rating;
         let diff = p1data.rating - p2data.rating;
@@ -183,18 +185,13 @@ export default function Lobby() {
         setRatingUpdateMessage(msg);
 
         if (userData.currentRoom == roomID) {
-          console.log("PLEASE");
           if (userData.codeforcesHandle == p1data.name) {
-            console.log("PLAYER 1?");
             await update(ref(getDatabase(), "users/" + userData.uid), {
-              currentRoom: "-",
               rating: p1newrating,
             });
           }
           if (userData.codeforcesHandle == p2data.name) {
-            console.log("PLAYER 2?");
             await update(ref(getDatabase(), "users/" + userData.uid), {
-              currentRoom: "-",
               rating: p2newrating,
             });
           }
@@ -370,7 +367,6 @@ export default function Lobby() {
 
           if (userData.currentRoom == roomID) {
             if (userData.codeforcesHandle == p1data.name) {
-              console.log(userData.uid);
               await update(ref(getDatabase(), "users/" + userData.uid), {
                 currentRoom: "-",
                 rating: p1newrating,
@@ -407,9 +403,6 @@ export default function Lobby() {
   };
 
   useEffect(() => {
-    console.log(endTime);
-    console.log(isRanked);
-    console.log(userData);
     renderProblems(p1data, p2data);
     renderTimer();
     if (ended) {
