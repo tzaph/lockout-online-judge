@@ -4,6 +4,20 @@ import { Link, useNavigate } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import { getDatabase, ref, get, child } from "firebase/database";
 
+export function rankLetter(rt) {
+  if (rt < 1000) return "D";
+  if (1000 <= rt && rt < 1200) return "C";
+  if (1200 <= rt && rt < 1400) return "B";
+  if (1400 <= rt && rt < 1700) return "A-";
+  if (1700 <= rt && rt < 2000) return "A";
+  if (2000 <= rt && rt < 2300) return "A+";
+  if (2300 <= rt && rt < 2500) return "S-";
+  if (2500 <= rt && rt < 2700) return "S";
+  if (2700 <= rt && rt < 3000) return "S+";
+  if (3000 <= rt) return "SS";
+  return "?";
+}
+
 export default function Dashboard() {
   const [error, setError] = useState("");
   const [data, setData] = useState({});
@@ -58,7 +72,7 @@ export default function Dashboard() {
           </tr>
           <tr align="left">
             <td>Rating:</td>
-            <td>{data.rating}</td>
+            <td>{data.rating} ({rankLetter(data.rating)} rank)</td>
           </tr>
         </table>
         <br />

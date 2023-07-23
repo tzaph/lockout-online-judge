@@ -296,6 +296,76 @@ export default function RoomList() {
           <div className="link-button">
             <Link to="/">Cancel</Link>
           </div>
+          <br />
+          <h4>Rating Table</h4>
+          <table>
+            <tr>
+              <th>Rating</th>
+              <th>Rank</th>
+              <th>Problem Rating Range</th>
+              <th>Duration (minutes)</th>
+            </tr>
+            <tr>
+              <td>≥ 3000</td>
+              <td>SS</td>
+              <td>1800 — 2600</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>2700 — 2999</td>
+              <td>S+</td>
+              <td>1700 — 2400</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>2500 — 2699</td>
+              <td>S</td>
+              <td>1500 — 2200</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>2300 — 2499</td>
+              <td>S-</td>
+              <td>1400 — 2000</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>2000 — 2299</td>
+              <td>A+</td>
+              <td>1300 — 1800</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>1700 — 1999</td>
+              <td>A</td>
+              <td>1000 — 1600</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>1400 — 1699</td>
+              <td>A-</td>
+              <td>900 — 1400</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>1200 — 1399</td>
+              <td>B</td>
+              <td>800 — 1200</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>1000 — 1199</td>
+              <td>C</td>
+              <td>800 — 1200</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>≤ 999</td>
+              <td>D</td>
+              <td>800 — 1200</td>
+              <td>120</td>
+            </tr>
+          </table>
         </div>
       )}
     </div>
