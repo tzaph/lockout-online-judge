@@ -29,6 +29,7 @@ exports[`<ProblemRecommendation /> Renders correctly 1`] = `
       Get New Problem Recommendation
     </button>
   </form>
+  <br />
   <div
     className="link-button"
   >

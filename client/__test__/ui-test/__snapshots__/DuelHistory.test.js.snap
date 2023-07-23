@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<DuelHistory /> Renders correctly 1`] = `
+<div
+  className="profile-container"
+>
+  <button
+    disabled={false}
+    onClick={[Function]}
+  >
+    Refresh Duel History List
+  </button>
+  <p />
+  <table />
+</div>
+`;

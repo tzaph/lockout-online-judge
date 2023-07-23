@@ -13,18 +13,40 @@ exports[`<Dashboard /> Renders correctly 1`] = `
     <h2>
       Profile
     </h2>
-    <label>
-      Email: 
-    </label>
-    <label>
-      Name: 
-    </label>
-    <label>
-      Codeforces Handle: 
-    </label>
-    <label>
-      Rating: 
-    </label>
+    <table>
+      <tr
+        align="left"
+      >
+        <td>
+          Email:
+        </td>
+        <td />
+      </tr>
+      <tr
+        align="left"
+      >
+        <td>
+          Name:
+        </td>
+        <td />
+      </tr>
+      <tr
+        align="left"
+      >
+        <td>
+          Codeforces Handle:
+        </td>
+        <td />
+      </tr>
+      <tr
+        align="left"
+      >
+        <td>
+          Rating:
+        </td>
+        <td />
+      </tr>
+    </table>
     <br />
     <a
       href="/update-profile"

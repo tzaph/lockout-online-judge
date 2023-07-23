@@ -2,12 +2,15 @@
 
 exports[`<Lobby /> Renders correctly 1`] = `
 <div
-  className="auth-form-container"
+  className="duel-container"
 >
   <h3>
-    Room 
+     Room 
     : 
-     vs 
+     (
+    ) vs 
+     (
+    )
   </h3>
   <h4>
     0
@@ -17,6 +20,7 @@ exports[`<Lobby /> Renders correctly 1`] = `
   <p>
     00:00:00
   </p>
+  <p />
   <table>
     <tr>
       <th>
@@ -24,6 +28,9 @@ exports[`<Lobby /> Renders correctly 1`] = `
       </th>
       <th>
         Points
+      </th>
+      <th>
+        Rating
       </th>
       <th>
         Status
@@ -38,15 +45,6 @@ exports[`<Lobby /> Renders correctly 1`] = `
       </td>
       <td />
       <td />
-    </tr>
-    <tr>
-      <td>
-        <a
-          href=""
-          target="_blank"
-        />
-      </td>
-      <td />
       <td />
     </tr>
     <tr>
@@ -58,6 +56,7 @@ exports[`<Lobby /> Renders correctly 1`] = `
       </td>
       <td />
       <td />
+      <td />
     </tr>
     <tr>
       <td>
@@ -68,6 +67,7 @@ exports[`<Lobby /> Renders correctly 1`] = `
       </td>
       <td />
       <td />
+      <td />
     </tr>
     <tr>
       <td>
@@ -76,6 +76,18 @@ exports[`<Lobby /> Renders correctly 1`] = `
           target="_blank"
         />
       </td>
+      <td />
+      <td />
+      <td />
+    </tr>
+    <tr>
+      <td>
+        <a
+          href=""
+          target="_blank"
+        />
+      </td>
+      <td />
       <td />
       <td />
     </tr>
