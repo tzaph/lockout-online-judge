@@ -63,6 +63,7 @@ export default function RoomList() {
   });
 
   socket.on("joinedRoom", () => {
+    setIsSet(true);
     setStarted(true);
   });
 
@@ -159,7 +160,6 @@ export default function RoomList() {
     }
 
     let problemsetRating = [problemRating1, problemRating2, problemRating3, problemRating4, problemRating5];
-    setIsSet(true);
     setRoom(newRoomCode);
     socket.emit("joinRoom", data.codeforcesHandle, data.rating, newRoomCode, duelLengthTime, problemsetRating, 1);
   };

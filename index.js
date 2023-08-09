@@ -158,7 +158,7 @@ io.on("connection", (socket) => {
             for (let i = 0; i < 2; i++) {
               let id = -1;
               for (let i = 0; i < customQueueStatus.length; i++)
-                if (customQueueStatus[i].name == players[i].name)
+                if (customQueueStatus[i].id == players[i].id)
                   id = i;
               if (id != -1) {
                 let tmpQueueStatus = [];
@@ -210,7 +210,7 @@ io.on("connection", (socket) => {
 
       let id = -1;
       for (let i = 0; i < customQueueStatus.length; i++)
-        if (customQueueStatus[i].name == name)
+        if (customQueueStatus[i].id == players[i].id)
           id = i;
       if (id != -1) {
         let tmpQueueStatus = [];
@@ -239,7 +239,7 @@ io.on("connection", (socket) => {
 
       let id = -1;
       for (let i = 0; i < customQueueStatus.length; i++)
-        if (customQueueStatus[i].name == name)
+        if (customQueueStatus[i].id == players[i].id)
           id = i;
       if (id != -1) {
         let tmpQueueStatus = [];
@@ -396,7 +396,7 @@ io.on("connection", (socket) => {
       console.log(name + " has left queue");
       let id = -1;
       for (let i = 0; i < rankedQueueStatus.length; i++)
-        if (rankedQueueStatus[i].name == name)
+        if (rankedQueueStatus[i].socketId == socket.id)
           id = i;
       if (id != -1) {
         let tmpQueueStatus = [];
@@ -413,7 +413,7 @@ io.on("connection", (socket) => {
       console.log(name + " has left queue by disconnect");
       let id = -1;
       for (let i = 0; i < rankedQueueStatus.length; i++)
-        if (rankedQueueStatus[i].name == name)
+        if (rankedQueueStatus[i].socketId == socket.id)
           id = i;
       if (id != -1) {
         let tmpQueueStatus = [];
