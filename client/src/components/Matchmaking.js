@@ -180,7 +180,7 @@ export default function RoomList() {
   });
 
   socket.on("dupeQueue", () => {
-    setError("You are already in matchmaking queue");
+    setError("You are already in matchmaking/custom room queue");
     setValid(false);
     setTimeout(() => setValid(true), 5000);
   });
